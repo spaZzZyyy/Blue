@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,9 +13,10 @@ public class PlayerMovement : MonoBehaviour
 
 
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform wallCheckRight;
-    [SerializeField] private Transform wallCheckLeft;
-
+    private float _movementPlayer;
+    private float playerThickness;
+    
+    
 
     #region Asigning Controls
 
@@ -31,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();
+        playerThickness = transform.localScale.x;
+
 
         #region Asigning Controls
 
@@ -46,31 +50,53 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        #region Run Input
+            _movementPlayer = 0f;
+            if (Input.GetKey(_moveRightButton))
+            {
+                _movementPlayer = 1f;
+                Vector2 localScale = transform.localScale;
+                localScale.x = playerThickness;
+                transform.localScale = localScale;
+            }
+
+            if (Input.GetKey(_moveLeftButton))
+            {
+                _movementPlayer = -1f;
+                Vector2 localScale = transform.localScale;
+                localScale.x = -playerThickness;
+                transform.localScale = localScale;
+            }
+        
+        #endregion
+        
+        if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
+        {
+            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, worldPhysics.jumpForce);
+        }
+
+        if (Input.GetKeyUp(_moveJumpButton) && _playerRigidbody.velocity.y > 0f)
+        {
+            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _playerRigidbody.velocity.y * worldPhysics.minJumpHeight);
+        }
+    }
 
     private void FixedUpdate()
     {
-        #region Control Input
+        _playerRigidbody.gravityScale = worldPhysics.gravityForce;
+        #region Movement
         //Run
+            _playerRigidbody.velocity = new Vector2(_movementPlayer * worldPhysics.movementSpeed, _playerRigidbody.velocity.y);
             
-            if (Input.GetKey(_moveRightButton))
-            {
-                
-            }
-            if (Input.GetKey(_moveLeftButton))
-            {
-                
-            }
-
-            #endregion
-
-            #region Physics
-
-                #region Gravity
-
-                    
-
-                #endregion
-
-            #endregion
+        #endregion
     }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, worldPhysics.groundCheckDistance, worldPhysics.groundLayer);
+    }
+    
+    
 }

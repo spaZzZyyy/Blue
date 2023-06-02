@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform groundCheck;
     private float _movementPlayer;
-    private float playerThickness;
+    private float _playerThickness;
     
     
 
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();
-        playerThickness = transform.localScale.x;
+        _playerThickness = transform.localScale.x;
 
 
         #region Asigning Controls
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _movementPlayer = 1f;
                 Vector2 localScale = transform.localScale;
-                localScale.x = playerThickness;
+                localScale.x = _playerThickness;
                 transform.localScale = localScale;
             }
 
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _movementPlayer = -1f;
                 Vector2 localScale = transform.localScale;
-                localScale.x = -playerThickness;
+                localScale.x = -_playerThickness;
                 transform.localScale = localScale;
             }
         

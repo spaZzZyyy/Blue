@@ -7,41 +7,31 @@ using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public WorldPhysics worldPhysics;
     public int health;
-    public static event Action<float> onPlayerHurt;
-    public static event Action<float> onPlayerGainHp;
-    public static event Action onPlayerDeath;
-    private BoxCollider2D _playerHitBox;
-    public EnemyBehavior enemyBehavior;
-
-    private void Start()
+    
+    private void OnEnable()
     {
-        _playerHitBox = GetComponent<BoxCollider2D>();
+        Actions.OnPlayerHit += OnPlayerHit;
     }
 
-    public void removeHp(int amount)
+    private void OnDisable()
     {
-        Debug.Log("Player hp: " + health);
-        health -= amount;
-        onPlayerHurt?.Invoke(health);
+        Actions.OnPlayerHit -= OnPlayerHit;
+    }
 
+    private void OnPlayerHit()
+    {
+        health -= worldPhysics.lightAttackDamage;
+        
         if (health <= 0)
         {
-            onPlayerDeath?.Invoke();
+            Actions.OnPlayerDeath();
         }
     }
 
-    public void addHp(int amount)
+    private void Update()
     {
-        health += amount;
-        onPlayerGainHp?.Invoke(health);
-    }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.CompareTag("Enemy"))
-        {
-            removeHp(enemyBehavior.enemyDamage);
-        }
+        Debug.Log("Player Health: " + health);
     }
 }

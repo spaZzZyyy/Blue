@@ -19,5 +19,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   groundCheckDistance: 0.5
-  maxSpeed: 84.89
   minJumpHeight: 0.29
+  lightAttackDamage: 1
+  heavyAttackDamage: 3

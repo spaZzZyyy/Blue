@@ -30,6 +30,22 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    private void OnEnable()
+    {
+        Actions.OnPlayerDeath += OnPlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        Actions.OnPlayerDeath -= OnPlayerDeath;
+    }
+
+    private void OnPlayerDeath()
+    {
+        Debug.Log("Player Died");
+        enabled = false;
+    }
+
     private void Start()
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();

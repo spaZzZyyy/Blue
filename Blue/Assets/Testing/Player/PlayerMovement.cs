@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     private float _movementPlayer;
     private float _playerThickness;
+
+    private bool _canDash = true;
     
     
 
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         private KeyCode _atkShootButton;
         private KeyCode _atkRotateInvRightButton;
         private KeyCode _atkRotateInvLeftButton;
+        private KeyCode _moveDashButton;
 
     #endregion
 
@@ -61,8 +64,9 @@ public class PlayerMovement : MonoBehaviour
             _atkShootButton = controls.atkShoot;
             _atkRotateInvLeftButton = controls.atkRotateInvLeft;
             _atkRotateInvRightButton = controls.atkRotateInvRight;
+            _moveDashButton = controls.dash;
 
-        #endregion
+            #endregion
 
     }
 
@@ -87,16 +91,33 @@ public class PlayerMovement : MonoBehaviour
             }
         
         #endregion
+
+        #region Jump
+            if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
+            {
+                _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, worldPhysics.jumpForce);
+            }
+
+            if (Input.GetKeyUp(_moveJumpButton) && _playerRigidbody.velocity.y > 0f)
+            {
+                _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _playerRigidbody.velocity.y * worldPhysics.minJumpHeight);
+            }
         
-        if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
+
+        #endregion
+
+        #region Dash
+
+        if (Input.GetKey(_moveDashButton))
         {
-            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, worldPhysics.jumpForce);
+            if (_canDash)
+            {
+                _playerRigidbody.AddForce(new Vector2(worldPhysics.dashDistance * _movementPlayer, 0));
+                StartCoroutine(OnDash());
+            }
         }
 
-        if (Input.GetKeyUp(_moveJumpButton) && _playerRigidbody.velocity.y > 0f)
-        {
-            _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _playerRigidbody.velocity.y * worldPhysics.minJumpHeight);
-        }
+        #endregion
     }
 
     private void FixedUpdate()
@@ -112,6 +133,14 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, worldPhysics.groundCheckDistance, worldPhysics.groundLayer);
+    }
+
+    IEnumerator OnDash()
+    {
+        yield return new WaitForSeconds(worldPhysics.dashDuration);
+        _canDash = false;
+        yield return new WaitForSeconds(worldPhysics.dashCoolDown);
+        _canDash = true;
     }
     
     

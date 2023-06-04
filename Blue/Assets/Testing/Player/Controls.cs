@@ -12,4 +12,5 @@ public class Controls : ScriptableObject
     public KeyCode atkShoot;
     public KeyCode atkRotateInvRight;
     public KeyCode atkRotateInvLeft;
+    public KeyCode dash;
 }

@@ -8,6 +8,7 @@ public class EnemyMovement : MonoBehaviour
     private float _enemyDirection;
     private Rigidbody2D _monsterRigidBody;
     public EnemyBehavior enemyBehavior;
+    private bool shouldFlip = false;
 
     private void OnEnable()
     {
@@ -21,7 +22,11 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnEnemyTurn()
     {
-        _enemyDirection *= -1;
+        if (shouldFlip)
+        {
+            _enemyDirection *= -1;
+            shouldFlip = false;
+        }
     }
 
     void Start()
@@ -37,11 +42,18 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Wall"))
+        if (col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Enemy"))
         {
             OnEnemyTurn();
         }
     }
-    
-    
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("AiTurn") || col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Player"))
+        {
+            shouldFlip = true;
+        }
+        
+    }
 }

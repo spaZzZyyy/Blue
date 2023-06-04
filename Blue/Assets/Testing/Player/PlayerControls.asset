@@ -19,3 +19,4 @@ MonoBehaviour:
   atkShoot: 0
   atkRotateInvRight: 0
   atkRotateInvLeft: 0
+  dash: 32

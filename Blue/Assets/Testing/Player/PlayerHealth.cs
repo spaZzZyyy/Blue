@@ -23,15 +23,13 @@ public class PlayerHealth : MonoBehaviour
     private void OnPlayerHit()
     {
         health -= worldPhysics.lightAttackDamage;
-        
+
         if (health <= 0)
         {
             Actions.OnPlayerDeath();
         }
-    }
-
-    private void Update()
-    {
+        
         Debug.Log("Player Health: " + health);
     }
+
 }

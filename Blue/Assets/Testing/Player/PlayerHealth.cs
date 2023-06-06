@@ -8,7 +8,8 @@ using UnityEngine.Events;
 public class PlayerHealth : MonoBehaviour
 {
     public WorldPhysics worldPhysics;
-    public int health;
+    public HealthBar healthbar;
+    private int _health;
     
     private void OnEnable()
     {
@@ -20,16 +21,22 @@ public class PlayerHealth : MonoBehaviour
         Actions.OnPlayerHit -= OnPlayerHit;
     }
 
+    private void Start()
+    {
+        _health = worldPhysics.maxHealth;
+        healthbar.SetMaxHealth(worldPhysics.maxHealth);
+    }
+
     private void OnPlayerHit()
     {
-        health -= worldPhysics.lightAttackDamage;
-
-        if (health <= 0)
+        _health -= worldPhysics.lightAttackDamage;
+        healthbar.SetHp(_health);
+        if (_health <= 0)
         {
             Actions.OnPlayerDeath();
         }
         
-        Debug.Log("Player Health: " + health);
+        //Debug.Log("Player Health: " + _health);
     }
 
 }

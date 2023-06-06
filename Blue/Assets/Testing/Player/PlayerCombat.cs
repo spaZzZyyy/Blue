@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-
-    private bool _isHit;
-    private WorldPhysics _worldPhysics;
+    public WorldPhysics worldPhysics;
+    private bool _damageLinger;
+    private bool _preventMultipleHits;
     private void OnEnable()
     {
         Actions.OnPlayerDeath += OnPlayerDeath;
@@ -28,8 +28,38 @@ public class PlayerCombat : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Enemy"))
         {
-            Actions.OnPlayerHit();
+            if (_preventMultipleHits == false)
+            {
+                StartCoroutine(TakeDamage());
+                _preventMultipleHits = true;
+            }
         }
     }
-    
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            _damageLinger = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            _damageLinger = false;
+        }
+    }
+
+    IEnumerator TakeDamage()
+    {
+        Actions.OnPlayerHit();
+        yield return new WaitForSeconds(worldPhysics.timeAfterHit);
+        _preventMultipleHits = false;
+        if (_damageLinger)
+        {
+            StartCoroutine(TakeDamage());
+        }
+    }
 }

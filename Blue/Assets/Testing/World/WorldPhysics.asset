@@ -23,6 +23,7 @@ MonoBehaviour:
   dashDistance: 113.08
   dashCoolDown: 1.1
   dashDuration: 0.09
-  timeAfterHit: 0
   lightAttackDamage: 1
   heavyAttackDamage: 3
+  maxHealth: 3
+  timeAfterHit: 1

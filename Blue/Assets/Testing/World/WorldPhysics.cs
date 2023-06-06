@@ -16,11 +16,12 @@ public class WorldPhysics : ScriptableObject
     public float dashDistance;
     public float dashCoolDown;
     public float dashDuration;
-    public float timeAfterHit;
 
     //Combat
     public int lightAttackDamage;
     public int heavyAttackDamage;
+    public int maxHealth;
+    public int timeAfterHit;
 
 }
 

@@ -12,6 +12,11 @@ public class Level : MonoBehaviour
         Actions.OnPlayerDeath += OnPlayerDeath;
     }
 
+    private void OnDisable()
+    {
+        Actions.OnPlayerDeath -= OnPlayerDeath;
+    }
+
     private void OnPlayerDeath()
     {
         StartCoroutine(OnPlayerDieWait());

@@ -20,8 +20,9 @@ MonoBehaviour:
     m_Bits: 4096
   groundCheckDistance: 0.5
   minJumpHeight: 0.29
-  dashDistance: 98.5
+  dashDistance: 113.08
   dashCoolDown: 1.1
   dashDuration: 0.09
+  timeAfterHit: 0
   lightAttackDamage: 1
   heavyAttackDamage: 3

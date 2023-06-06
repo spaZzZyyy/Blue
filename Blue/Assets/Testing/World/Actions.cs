@@ -9,4 +9,5 @@ public static class Actions
     public static Action OnPlayerDeath;
     public static Action OnEnemyTurn;
     public static Action OnPlayerWin;
+    public static Action OnPlayerDash;
 }

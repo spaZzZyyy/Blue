@@ -15,10 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     private float _movementPlayer;
     private float _playerThickness;
-
     private bool _canDash = true;
-    
-    
+
 
     #region Asigning Controls
 
@@ -105,14 +103,15 @@ public class PlayerMovement : MonoBehaviour
         
 
         #endregion
-
+        
         #region Dash
-
+        
         if (Input.GetKey(_moveDashButton))
         {
             if (_canDash)
             {
                 _playerRigidbody.AddForce(new Vector2(worldPhysics.dashDistance * _movementPlayer, 0));
+                Actions.OnPlayerDash();
                 StartCoroutine(OnDash());
             }
         }
@@ -134,9 +133,11 @@ public class PlayerMovement : MonoBehaviour
     {
         return Physics2D.OverlapCircle(groundCheck.position, worldPhysics.groundCheckDistance, worldPhysics.groundLayer);
     }
-
+    
+    
     IEnumerator OnDash()
     {
+        
         yield return new WaitForSeconds(worldPhysics.dashDuration);
         _canDash = false;
         yield return new WaitForSeconds(worldPhysics.dashCoolDown);

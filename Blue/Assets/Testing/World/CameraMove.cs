@@ -38,12 +38,5 @@ public class CameraMove : MonoBehaviour
             _moveCam = true;
         }
     }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            _moveCam = true;
-        }
-    }
+    
 }

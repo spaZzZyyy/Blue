@@ -43,7 +43,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        Debug.Log("Player Died");
         enabled = false;
     }
 

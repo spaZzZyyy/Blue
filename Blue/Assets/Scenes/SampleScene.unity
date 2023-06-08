@@ -5058,6 +5058,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2742956061970464430, guid: a7e35f212a0cefe4394ae116c657fde1, type: 3}
   m_PrefabInstance: {fileID: 894442232}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1311321867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1311321867, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+  m_PrefabInstance: {fileID: 1201050489458976264}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1311321869 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1311321869, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+  m_PrefabInstance: {fileID: 1201050489458976264}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311321867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1323644722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8175,10 +8191,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1620025193, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
-      propertyPath: playerDashTrailTime
-      value: 0.28
+    - target: {fileID: 1117891443, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1311321867, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311321869, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311321869, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311321869, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_Colors.m_FadeDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1311321869, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572044018, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572044018, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572044018, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699555637, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699555637, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1699555637, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030300259, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2004672926}
     - target: {fileID: 1201050489939249024, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -8231,10 +8295,18 @@ PrefabInstance:
       propertyPath: healthbar
       value: 
       objectReference: {fileID: 1936570227}
-    - target: {fileID: 1201050489939249049, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
-      propertyPath: worldPhysics
+    - target: {fileID: 4082992761041465396, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: dashAni
+      value: 0.00016
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082992761041465396, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: hideDashBar
       value: 
-      objectReference: {fileID: 11400000, guid: 39ac58998c13ec74e90c27c301094978, type: 2}
+      objectReference: {fileID: 1311321867}
+    - target: {fileID: 4082992761041465396, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
+      propertyPath: _dashCoolDownBar
+      value: 
+      objectReference: {fileID: 1311321869}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5914032423a27b3479bc1c4c0dbf071a, type: 3}
 --- !u!1001 &2956533156217844676

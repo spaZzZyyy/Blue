@@ -9,13 +9,16 @@ public class PlayerMovement : MonoBehaviour
 {
     public Controls controls;
     public WorldPhysics worldPhysics;
-    private Rigidbody2D _playerRigidbody;
-
-
     [SerializeField] private Transform groundCheck;
+    private Rigidbody2D _playerRigidbody;
+    private Animator _playerAni;
+    
     private float _movementPlayer;
     private float _playerThickness;
     private bool _canDash = true;
+
+    private float fallSpeed = 10;
+    private float fallingSpeed = 0.25f;
 
 
     #region Asigning Controls
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _playerRigidbody = GetComponent<Rigidbody2D>();
         _playerThickness = transform.localScale.x;
-
+        _playerAni = GetComponent<Animator>();
 
         #region Asigning Controls
 
@@ -86,8 +89,8 @@ public class PlayerMovement : MonoBehaviour
                 localScale.x = -_playerThickness;
                 transform.localScale = localScale;
             }
-        
-        #endregion
+
+            #endregion
 
         #region Jump
             if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
@@ -113,6 +116,44 @@ public class PlayerMovement : MonoBehaviour
                 Actions.OnPlayerDash();
                 StartCoroutine(OnDash());
             }
+        }
+
+        #endregion
+
+        #region Animation
+
+        if (IsGrounded())
+        {
+            _playerAni.SetBool("Grounded", true);
+        }
+        else
+        {
+            _playerAni.SetBool("Grounded", false);
+        }
+
+        if (_movementPlayer != 0)
+        {
+            _playerAni.SetInteger("AnimState", 1);
+        }
+        else
+        {
+            _playerAni.SetInteger("AnimState", 0);
+        }
+
+        
+        fallSpeed -= fallingSpeed;
+        _playerAni.SetFloat("AirSpeedY", fallSpeed);
+        
+
+        if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
+        {
+            _playerAni.SetTrigger("Jump");
+            fallSpeed = 10;
+        }
+
+        if (Input.GetKeyUp(_moveJumpButton) && _playerRigidbody.velocity.y > 0f)
+        {
+            fallSpeed = 5;
         }
 
         #endregion

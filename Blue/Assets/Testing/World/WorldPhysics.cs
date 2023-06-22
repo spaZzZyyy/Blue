@@ -16,6 +16,7 @@ public class WorldPhysics : ScriptableObject
     public float dashDistance;
     public float dashCoolDown;
     public float dashDuration;
+    public float cyoteTime;
 
     //Combat
     public int lightAttackDamage;

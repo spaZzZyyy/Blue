@@ -6,11 +6,16 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public WorldPhysics worldPhysics;
+    private Animator _ani;
     private bool _damageLinger;
     private bool _preventMultipleHits;
+    private bool _dead;
+    
     private void OnEnable()
     {
         Actions.OnPlayerDeath += OnPlayerDeath;
+        _ani = GetComponent<Animator>();
+        _dead = true;
     }
 
     private void OnDisable()
@@ -21,6 +26,8 @@ public class PlayerCombat : MonoBehaviour
     private void OnPlayerDeath()
     {
         Debug.Log("Player Died");
+        _ani.SetTrigger("Death");
+        _dead = false;
         enabled = false;
     }
 
@@ -55,9 +62,12 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator TakeDamage()
     {
         Actions.OnPlayerHit();
+        
+        _ani.SetTrigger("Hurt");
+        
         yield return new WaitForSeconds(worldPhysics.timeAfterHit);
         _preventMultipleHits = false;
-        if (_damageLinger)
+        if (_damageLinger && _dead)
         {
             StartCoroutine(TakeDamage());
         }

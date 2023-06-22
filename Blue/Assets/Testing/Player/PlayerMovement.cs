@@ -17,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
     private float _playerThickness;
     private bool _canDash = true;
 
-    private float fallSpeed = 10;
-    private float fallingSpeed = 0.25f;
+    private float _fallSpeed = 10;
+    private float _fallingSpeed = 0.25f;
+
+    private float _timeFromGround;
 
 
     #region Asigning Controls
@@ -93,8 +95,9 @@ public class PlayerMovement : MonoBehaviour
             #endregion
 
         #region Jump
-            if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
+            if ( (Input.GetKeyDown(_moveJumpButton) && IsGrounded() ) || (Input.GetKeyDown(_moveJumpButton) && worldPhysics.cyoteTime > _timeFromGround))
             {
+                Debug.Log(_timeFromGround);
                 _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, worldPhysics.jumpForce);
             }
 
@@ -102,8 +105,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _playerRigidbody.velocity = new Vector2(_playerRigidbody.velocity.x, _playerRigidbody.velocity.y * worldPhysics.minJumpHeight);
             }
-        
-
+            
         #endregion
         
         #region Dash
@@ -141,19 +143,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
-        fallSpeed -= fallingSpeed;
-        _playerAni.SetFloat("AirSpeedY", fallSpeed);
+        _fallSpeed -= _fallingSpeed;
+        _playerAni.SetFloat("AirSpeedY", _fallSpeed);
         
 
         if (Input.GetKeyDown(_moveJumpButton) && IsGrounded())
         {
             _playerAni.SetTrigger("Jump");
-            fallSpeed = 10;
+            _fallSpeed = 10;
         }
 
         if (Input.GetKeyUp(_moveJumpButton) && _playerRigidbody.velocity.y > 0f)
         {
-            fallSpeed = 5;
+            _fallSpeed = 5;
         }
 
         #endregion
@@ -167,6 +169,15 @@ public class PlayerMovement : MonoBehaviour
             _playerRigidbody.velocity = new Vector2(_movementPlayer * worldPhysics.movementSpeed, _playerRigidbody.velocity.y);
             
         #endregion
+        //Cyote time
+        if (IsGrounded() == false)
+        {
+            _timeFromGround++;
+        }
+        else
+        {
+            _timeFromGround = 0;
+        }
     }
 
     private bool IsGrounded()
